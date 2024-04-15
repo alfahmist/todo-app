@@ -6,12 +6,13 @@ import Edit from './edit';
 function App() {
 	// const [arr, setArr] = useState(['A', 'B', 'C', 'D', 'E']);
 	const [arr, setArr] = useState([
-		{ value: 'A', checked: false },
-		{ value: 'B', checked: false },
-		{ value: 'C', checked: false },
-		{ value: 'D', checked: false },
-		{ value: 'E', checked: false },
+		{ value: 'A', checked: false, status: 'todo' },
+		{ value: 'B', checked: false, status: 'in-progress' },
+		{ value: 'C', checked: false, status: 'done' },
+		{ value: 'D', checked: false, status: 'todo' },
+		{ value: 'E', checked: false, status: 'todo' },
 	]);
+	const options = ['todo', 'in-progress', 'done'];
 	const [input, setInput] = useState('');
 
 	const get = (data) => {
@@ -52,6 +53,25 @@ function App() {
 				return (
 					<div key={String(item.value + key)}>
 						<span>{key + 1}. </span>
+						{/* status */}
+						<select
+							defaultValue={item.status}
+							onChange={(res) => {
+								console.log(res.target.value);
+								const newArr = [...arr];
+								newArr[key].status = res.target.value;
+								setArr(newArr);
+								console.log(newArr);
+							}}
+						>
+							{options.map((op, opKey) => {
+								return (
+									<option key={opKey} value={op}>
+										{op}
+									</option>
+								);
+							})}
+						</select>
 						<Edit item={item.value} index={key} get={get} />
 						{/* {edit ? (
 							<input type='text' value={item} />
@@ -78,43 +98,25 @@ function App() {
 						>
 							Delete
 						</button>
-						{item.checked === false ? (
-							<input
-								type='checkbox'
-								onChange={(res) => {
-									// console.log(res.target.checked);
-									// console.log(key);
-									item.checked = res.target.checked;
-									// console.log(item);
-									const newArr = [...arr];
-									newArr[key].checked = item.checked;
-									setArr(newArr);
-									console.log(newArr);
-								}}
+						<input
+							defaultChecked={item.checked}
+							type='checkbox'
+							onChange={(res) => {
+								// console.log(res.target.checked);
+								// console.log(key);
+								item.checked = res.target.checked;
+								// console.log(item);
+								const newArr = [...arr];
+								newArr[key].checked = item.checked;
+								setArr(newArr);
+								console.log('Checked : ' + item.checked);
+								console.log(newArr);
+							}}
 
-								// onClick={(res) => {
-								// 	console.log(res);
-								// }}
-							/>
-						) : (
-							<input
-								type='checkbox'
-								onChange={(res) => {
-									// console.log(res.target.checked);
-									// console.log(key);
-									item.checked = res.target.checked;
-									// console.log(item);
-									const newArr = [...arr];
-									newArr[key].checked = item.checked;
-									setArr(newArr);
-									console.log(newArr);
-								}}
-								checked
-								// onClick={(res) => {
-								// 	console.log(res);
-								// }}
-							/>
-						)}
+							// onClick={(res) => {
+							// 	console.log(res);
+							// }}
+						/>
 					</div>
 				);
 			})}
