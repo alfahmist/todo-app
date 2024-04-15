@@ -1,9 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import Edit from './edit';
+import Button from './Button';
+import List from './List';
+import InputTambah from './InputTambah';
+import NoList from './NoList';
 
 function App() {
+	let handleMultipleDeleteButton = () => {
+		let newArr = arr.filter((index) => {
+			return index.checked !== true;
+		});
+		setArr(newArr);
+		console.log('delete banyak');
+		console.log(newArr);
+	};
 	// const [arr, setArr] = useState(['A', 'B', 'C', 'D', 'E']);
 	const [arr, setArr] = useState([
 		{ value: 'A', checked: false, status: 'todo' },
@@ -12,8 +22,8 @@ function App() {
 		{ value: 'D', checked: false, status: 'todo' },
 		{ value: 'E', checked: false, status: 'todo' },
 	]);
-	const options = ['todo', 'in-progress', 'done'];
-	const [input, setInput] = useState('');
+	// const options = ['todo', 'in-progress', 'done'];
+	// const [text, setText] = useState('');
 
 	const get = (data) => {
 		const newArr = [...arr];
@@ -24,114 +34,32 @@ function App() {
 	return (
 		<div className='App'>
 			{/* INPUT */}
-			<input
-				type='text'
-				onChange={(event) => {
-					setInput(event.target.value);
-					// console.log(input);
-				}}
-				value={input}
-			/>
-			<button
-				onClick={() => {
-					if (input !== '') {
-						let arrTambah = {
-							value: input,
-							checked: false,
-						};
-						setArr([...arr, arrTambah]);
-						console.log(arr);
-					}
-					setInput('');
-				}}
-			>
-				Tambah
-			</button>
-
+			<InputTambah arr={arr} setArr={setArr} />
+			<div>
+				<span>status</span>
+				<span>text</span>
+				<span>edit</span>
+				<span>delete</span>
+				<span>choose</span>
+			</div>
 			{/* LIST */}
-			{arr.map((item, key) => {
-				return (
-					<div key={String(item.value + key)}>
-						<span>{key + 1}. </span>
-						{/* status */}
-						<select
-							defaultValue={item.status}
-							onChange={(res) => {
-								console.log(res.target.value);
-								const newArr = [...arr];
-								newArr[key].status = res.target.value;
-								setArr(newArr);
-								console.log(newArr);
-							}}
-						>
-							{options.map((op, opKey) => {
-								return (
-									<option key={opKey} value={op}>
-										{op}
-									</option>
-								);
-							})}
-						</select>
-						<Edit item={item.value} index={key} get={get} />
-						{/* {edit ? (
-							<input type='text' value={item} />
-						) : (
-							<input type='text' value={item} disabled />
-						)}
-
-						<button
-							onClick={() => {
-								setEdit(true);
-							}}
-						>
-							Edit
-						</button> */}
-						<button
-							onClick={() => {
-								let newArr = arr.filter((index) => {
-									return item !== index;
-								});
-								setArr(newArr);
-								console.log('click delete : ' + item.value);
-								console.log(newArr);
-							}}
-						>
-							Delete
-						</button>
-						<input
-							defaultChecked={item.checked}
-							type='checkbox'
-							onChange={(res) => {
-								// console.log(res.target.checked);
-								// console.log(key);
-								item.checked = res.target.checked;
-								// console.log(item);
-								const newArr = [...arr];
-								newArr[key].checked = item.checked;
-								setArr(newArr);
-								console.log('Checked : ' + item.checked);
-								console.log(newArr);
-							}}
-
-							// onClick={(res) => {
-							// 	console.log(res);
-							// }}
+			{arr.length !== 0 ? (
+				arr.map((item, index) => {
+					return (
+						<List
+							key={index + item.value}
+							arr={arr}
+							setArr={setArr}
+							item={item}
+							index={index}
+							get={get}
 						/>
-					</div>
-				);
-			})}
-			<button
-				onClick={() => {
-					let newArr = arr.filter((index) => {
-						return index.checked !== true;
-					});
-					setArr(newArr);
-					console.log('delete banyak');
-					console.log(newArr);
-				}}
-			>
-				Delete Banyak
-			</button>
+					);
+				})
+			) : (
+				<NoList />
+			)}
+			<Button onClick={handleMultipleDeleteButton} text='Delete Banyak' />
 		</div>
 	);
 }

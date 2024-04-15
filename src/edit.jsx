@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Input from './Input';
+import Button from './Button';
 
 const Edit = (props) => {
 	// console.log(props);
@@ -8,35 +10,33 @@ const Edit = (props) => {
 		<>
 			{edit ? (
 				<>
-					<input
+					<Input
 						type='text'
 						value={text}
 						onChange={(event) => {
 							setText(event.target.value);
 						}}
 					/>
-					<button
+					<Button
 						onClick={() => {
 							setEdit(!edit);
 							setText(text);
 							console.log('Click Done : ' + text);
 							props.get({ text: text, index: props.index });
 						}}
-					>
-						Done
-					</button>
+						text='Done'
+					/>
 				</>
 			) : (
 				<>
-					<input type='text' value={props.item} disabled />
-					<button
+					<Input type='text' value={props.item} disabled />
+					<Button
 						onClick={() => {
 							setEdit(!edit);
 							console.log('Click Edit : ' + text);
 						}}
-					>
-						Edit
-					</button>
+						text='Edit'
+					/>
 				</>
 			)}
 		</>
