@@ -8,10 +8,14 @@ const InputTambah = (props) => {
 			let arrTambah = {
 				value: text,
 				checked: false,
+				status: 'Todo',
 			};
-			props.setArr([...props.arr, arrTambah]);
+			// props.setArr([...props.arr, arrTambah]);
 			console.log('click tambah : ' + text);
-			console.log(props.arr);
+			// console.log(props.arr);
+			// tambahain function get untuk kirim data dari sini ke parent
+			// console.log(arrTambah);
+			props.getAdd(arrTambah);
 		}
 		setText('');
 	};

@@ -53,18 +53,18 @@ const List = (props) => {
 	let handleButtonDone = () => {
 		setEdit(!edit);
 		setText(text);
-		props.get({ text: text, index: props.index });
+		props.getEdit({ text: text, index: props.index });
 		console.log('Click Done : ' + text);
 	};
 
 	return (
 		<>
-			<span className='self-center'>{props.index + 1}. </span>
+			<span className='self-center cursor-default'>{props.index + 1}. </span>
 			{/* Status */}
 			<select
 				defaultValue={props.item.status}
 				onChange={handleSelectOption}
-				className='col-span-2 focus:outline-none text-lg'
+				className='col-span-2 focus:outline-none text-lg cursor-pointer appearance-none text-center'
 			>
 				{options.map((op, opKey) => {
 					return (
@@ -106,7 +106,7 @@ const List = (props) => {
 				<>
 					<label
 						onClick={handleButtonDone}
-						className='text-lg focus:outline-none self-center cursor-pointer'
+						className='text-lg focus:outline-none flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded-xl'
 						htmlFor={String(props.index)}
 					>
 						Done
@@ -116,14 +116,17 @@ const List = (props) => {
 				<>
 					<label
 						onClick={handleButtonEdit}
-						className='text-lg focus:outline-none self-center cursor-pointer'
+						className='text-lg focus:outline-none flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded-xl '
 						htmlFor={String(props.index)}
 					>
 						Edit
 					</label>
 				</>
 			)}
-			<button onClick={handleDelete} className='text-lg'>
+			<button
+				onClick={handleDelete}
+				className='text-lg hover:bg-slate-200 rounded-xl'
+			>
 				Delete
 			</button>
 
@@ -131,7 +134,7 @@ const List = (props) => {
 				defaultChecked={props.item.checked}
 				type='checkbox'
 				onChange={handleCheck}
-				className='w-5 h-5 self-center mx-auto'
+				className='w-5 h-5 self-center mx-auto cursor-pointer'
 			/>
 		</>
 	);
