@@ -106,7 +106,7 @@ const List = (props) => {
 				<>
 					<label
 						onClick={handleButtonDone}
-						className='text-lg focus:outline-none flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded-xl'
+						className='text-lg focus:outline-none flex justify-center items-center cursor-pointer bg-slate-300 rounded-xl'
 						htmlFor={String(props.index)}
 					>
 						Done
